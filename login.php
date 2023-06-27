@@ -29,8 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-
+// Cerrar la conexión
+$conexion->close();
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -53,18 +55,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="masthead">
             <div class="masthead-content text-white">
                 <div class="container-fluid px-4 px-lg-0">
-                    <?php if(!empty($message)): ?>
-                      <p> <?= $message ?></p>
-                    <?php endif; ?>
+                <?php require 'partials/header.php' ?>
 
-                    <h1>Iniciar sesión</h1>
-                    <span>o <a href="signup.php">Registrar Usuario</a></span>
+<?php if(!empty($message)): ?>
+  <p> <?= $message ?></p>
+<?php endif; ?>
 
-                    <form action="login.php" method="POST">
-                      <input name="email" type="text" placeholder="Ingrese su email">
-                      <input name="password" type="password" placeholder="Ingrese su contraseña">
-                      <input type="submit" value="Submit">
-                    </form>
+<h1>Iniciar sesión</h1>
+<span>o <a href="signup.php">Registrar Usuario</a></span>
+
+<form action="login.php" method="POST">
+  <input name="email" type="text" placeholder="Ingrese su email">
+  <input name="password" type="password" placeholder="Ingrese su contraseña">
+  <input type="submit" value="Submit">
+</form>
                 </div>
             </div>
         </div>

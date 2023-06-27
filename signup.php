@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "database.php";
 
 // Variables para almacenar los mensajes de error
@@ -63,9 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Insertar el usuario en la tabla si no hay errores
   if (empty($dniError) && empty($nombreError) && empty($correoError) && empty($direccionError) && empty($usuarioError) && empty($passwordError) && empty($confirmPasswordError)) {
-    $sql = "INSERT INTO usuario (DNI, Nombre, email, Direccion, Usuario, password) VALUES ('$dni', '$nombre', '$correo', '$direccion', '$usuario', '$password')";
+    $query = "INSERT INTO usuario (DNI, Nombre, email, Direccion, Usuario, password) VALUES ('$dni', '$nombre', '$correo', '$direccion', '$usuario', '$password')";
 
-    if ($conexion->query($sql) === TRUE) {
+    if ($conexion->query($query) === TRUE) {
       echo "Usuario registrado exitosamente.";
     } else {
       echo "Error al registrar al usuario: " . $conexion->error;
@@ -73,7 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-
+// Cerrar la conexión
+$conexion->close();
 ?>
 
 <!DOCTYPE html>
@@ -92,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link href="assets/css/styles.css" rel="stylesheet" />
     </head>
     <body>
+    <?php require 'partials/header.php' ?>
         <!-- Background Video-->
         <video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="assets/assets/mp4/bg.mp4" type="video/mp4" /></video>
         <!-- Masthead-->
@@ -99,40 +101,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="masthead-content text-white">
                 <div class="container-fluid px-4 px-lg-0">
                     <h1 class="fst-italic lh-1 mb-4">Registrar Usuario</h1>
-                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <span>o <a href="login.php">Iniciar sesión</a></span>
-                        <input name="dni" type="text" placeholder="Ingrese su DNI"  pattern="^\d{8}$" title="El dni solo debe contener 8 numeros" required>
-                            <?php if (!empty($dniError)): ?>
-                            <p><?php echo $dniError; ?></p>
-                            <?php endif; ?>
+                    <form action="signup.php" method="POST">
+      <input name="dni" type="text" placeholder="Ingrese su DNI"  pattern="^\d{8}$" title="El dni solo debe contener 8 numeros" required>
+      <?php if (!empty($dniError)): ?>
+        <p><?php echo $dniError; ?></p>
+      <?php endif; ?>
 
-                        <input name="nombre" type="text" placeholder="Ingrese su nombre completo"  title="Ingrese su nombre y apellidos" required>
+      <input name="nombre" type="text" placeholder="Ingrese su nombre completo"  title="Ingrese su nombre y apellidos" required>
 
-                        <input name="correo" type="text" placeholder="Ingrese su email" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="El email debe contener una extension @gmail.com" required>
-                            <?php if (!empty($correoError)): ?>
-                            <p><?php echo $correoError; ?></p>
-                            <?php endif; ?>
+      <input name="correo" type="text" placeholder="Ingrese su email" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="El email debe contener una extension @gmail.com" required>
+      <?php if (!empty($correoError)): ?>
+        <p><?php echo $correoError; ?></p>
+      <?php endif; ?>
 
 
-                        <input name="direccion" type="text" placeholder="Ingrese su direccion" title="Ingrese su dirección de vivienda" required>
+      <input name="direccion" type="text" placeholder="Ingrese su direccion" title="Ingrese su dirección de vivienda" required>
 
-                        <input name="usuario" type="text" placeholder="Ingrese su nombre de usuario" title="Ingrese su nombre de usuario" required>
-                            <?php if (!empty($usuarioError)): ?>
-                            <p><?php echo $usuarioError; ?></p>
-                            <?php endif; ?>
+      <input name="usuario" type="text" placeholder="Ingrese su nombre de usuario" title="Ingrese su nombre de usuario" required>
+      <?php if (!empty($usuarioError)): ?>
+        <p><?php echo $usuarioError; ?></p>
+      <?php endif; ?>
 
-                        <input name="password" type="password" placeholder="Ingrese su contraseña" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).*$" title="La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial o un número" required>
-                            <?php if (!empty($passwordError)): ?>
-                            <p><?php echo $passwordError; ?></p>
-                            <?php endif; ?>
+     <input name="password" type="password" placeholder="Ingrese su contraseña" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).*$" title="La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial o un número" required>
+      <?php if (!empty($passwordError)): ?>
+        <p><?php echo $passwordError; ?></p>
+      <?php endif; ?>
 
-                        <input name="confirm_password" type="password" placeholder="Confirma su contraseña" title="Repita su contraseña"required>
-                            <?php if (!empty($confirmPasswordError)): ?>
-                            <p><?php echo $confirmPasswordError; ?></p>
-                            <?php endif; ?>
+      <input name="confirm_password" type="password" placeholder="Confirma su contraseña" title="Reptia su contraseña"required>
+      <?php if (!empty($confirmPasswordError)): ?>
+        <p><?php echo $confirmPasswordError; ?></p>
+      <?php endif; ?>
 
-                        <input type="submit" value="Submit">
-                    </form>
+      <input type="submit" value="Submit">
+    </form>
                 </div>
             </div>
         </div>
