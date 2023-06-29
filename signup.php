@@ -102,14 +102,14 @@ $conexion->close();
                 <div class="container-fluid px-4 px-lg-0">
                     <h1 class="fst-italic lh-1 mb-4">Registrar Usuario</h1>
                     <form action="signup.php" method="POST">
-      <input name="dni" type="text" placeholder="Ingrese su DNI"  pattern="^\d{8}$" title="El dni solo debe contener 8 numeros" required>
-      <?php if (!empty($dniError)): ?>
-        <p><?php echo $dniError; ?></p>
-      <?php endif; ?>
+                      <input name="dni" type="text" placeholder="Ingrese su DNI"  pattern="^\d{8}$" title="El dni solo debe contener 8 numeros" required>
+                        <?php if (!empty($dniError)): ?>
+                          <p><?php echo $dniError; ?></p>
+                          <?php endif; ?>
 
-      <input name="nombre" type="text" placeholder="Ingrese su nombre completo"  title="Ingrese su nombre y apellidos" required>
+                      <input name="nombre" type="text" placeholder="Ingrese su nombre completo"  title="Ingrese su nombre y apellidos" required>
 
-      <input name="correo" type="text" placeholder="Ingrese su email" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="El email debe contener una extension @gmail.com" required>
+            <input name="correo" type="text" placeholder="Ingrese su email" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" title="El email debe contener una extension @gmail.com" required>
       <?php if (!empty($correoError)): ?>
         <p><?php echo $correoError; ?></p>
       <?php endif; ?>
